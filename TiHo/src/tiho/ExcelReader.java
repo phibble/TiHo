@@ -35,14 +35,14 @@ public class ExcelReader
 
 		readExcelFile();
 	}
-	
+
 	public ExcelReader(String path, String[] parameters)
 	{
 		this.path = path;
-		
+
 		getExcelSheet();
 		removeExcelSheets(workbook);
-		
+
 		readExcelFile(parameters);
 	}
 
@@ -102,7 +102,7 @@ public class ExcelReader
 		closeFile();
 		System.exit(0);
 	}
-	
+
 	private void readExcelFile(String[] parameters)
 	{
 		Row row = null;
@@ -152,6 +152,7 @@ public class ExcelReader
 				}
 				cellCounter++;
 			}
+
 			cellCounter = 0;
 			rowCounter++;
 		}
@@ -159,7 +160,7 @@ public class ExcelReader
 		closeFile();
 		System.exit(0);
 	}
-	
+
 	private void closeFile()
 	{
 		try
@@ -175,7 +176,7 @@ public class ExcelReader
 	{
 		exWriter = new ExcelWriter(row, workbook, probe);
 	}
-	
+
 	private void writeExcelSheet(Row row, Probe probe, String[] parameters)
 	{
 		exWriter = new ExcelWriter(row, workbook, probe, parameters);

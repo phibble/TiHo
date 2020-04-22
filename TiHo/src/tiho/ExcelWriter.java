@@ -43,27 +43,46 @@ public class ExcelWriter
 
 		XSSFSheet newSheet = null;
 
-		if(workbook.getSheet(valueID) == null)
+		if(valueID.contains("TS"))
 		{
-			newSheet = workbook.createSheet(valueID);
-			countNewRows = 0;
+			if(workbook.getSheet("TS") == null)
+			{
+				newSheet = workbook.createSheet("TS");
+				countNewRows = 0;
+			} else
+			{
+				newSheet = workbook.getSheet("TS");
+				countNewRows = newSheet.getLastRowNum() + 1;
+			}
 		} else
 		{
-			newSheet = workbook.getSheet(valueID);
-			countNewRows = newSheet.getLastRowNum() + 1;
+			if(workbook.getSheet(valueID) == null)
+			{
+				newSheet = workbook.createSheet(valueID);
+				countNewRows = 0;
+			} else
+			{
+				newSheet = workbook.getSheet(valueID);
+				countNewRows = newSheet.getLastRowNum() + 1;
+			}
 		}
 
 		Row newRow = null;
 
-		if(countNewRows != 0)
+		if(!(valueID.contains("2.") && valueID.contains("TS")))
 		{
-			newSheet.createRow(countNewRows++); // blank line but not on the first line
+			if(countNewRows != 0)
+			{
+				newRow = newSheet.createRow(countNewRows++); // blank line but not on the first line
+			}
+
+			newRow = newSheet.createRow(countNewRows++);
+
+			cell = newRow.createCell(0);
+			cell.setCellValue(probe.getNumber());
+			cell = newRow.createCell(1);
+			cell.setCellValue(probe.getName());
 		}
-
-		newRow = newSheet.createRow(countNewRows++);
-
-		newRow.createCell(0).setCellValue(probe.getNumber());
-		newRow.createCell(1).setCellValue(probe.getName());
 
 		newRow = newSheet.createRow(countNewRows++);
 
@@ -87,32 +106,50 @@ public class ExcelWriter
 
 		if(paramList.contains(valueID))
 		{
-
 			int countNewRows = 0;
 
 			XSSFSheet newSheet = null;
 
-			if(workbook.getSheet(valueID) == null)
+			if(valueID.contains("TS"))
 			{
-				newSheet = workbook.createSheet(valueID);
-				countNewRows = 0;
+				if(workbook.getSheet("TS") == null)
+				{
+					newSheet = workbook.createSheet("TS");
+					countNewRows = 0;
+				} else
+				{
+					newSheet = workbook.getSheet("TS");
+					countNewRows = newSheet.getLastRowNum() + 1;
+				}
 			} else
 			{
-				newSheet = workbook.getSheet(valueID);
-				countNewRows = newSheet.getLastRowNum() + 1;
+				if(workbook.getSheet(valueID) == null)
+				{
+					newSheet = workbook.createSheet(valueID);
+					countNewRows = 0;
+				} else
+				{
+					newSheet = workbook.getSheet(valueID);
+					countNewRows = newSheet.getLastRowNum() + 1;
+				}
 			}
 
 			Row newRow = null;
 
-			if(countNewRows != 0)
+			if(!(valueID.contains("2.") && valueID.contains("TS")))
 			{
-				newSheet.createRow(countNewRows++); // blank line but not on the first line
+				if(countNewRows != 0)
+				{
+					newRow = newSheet.createRow(countNewRows++); // blank line but not on the first line
+				}
+
+				newRow = newSheet.createRow(countNewRows++);
+
+				cell = newRow.createCell(0);
+				cell.setCellValue(probe.getNumber());
+				cell = newRow.createCell(1);
+				cell.setCellValue(probe.getName());
 			}
-
-			newRow = newSheet.createRow(countNewRows++);
-
-			newRow.createCell(0).setCellValue(probe.getNumber());
-			newRow.createCell(1).setCellValue(probe.getName());
 
 			newRow = newSheet.createRow(countNewRows++);
 
@@ -142,12 +179,15 @@ public class ExcelWriter
 
 	public void copyNumericStringValue(Row row, int index, Row newRow)
 	{
-		if(row.getCell(index).getCellTypeEnum() == CellType.STRING)
+		Cell cell = row.getCell(index);
+		if(cell.getCellTypeEnum() == CellType.STRING)
 		{
-			newRow.createCell(index).setCellValue(row.getCell(index).getStringCellValue());
-		} else if(row.getCell(index).getCellTypeEnum() == CellType.NUMERIC)
+			cell = newRow.createCell(index);
+			cell.setCellValue(row.getCell(index).getStringCellValue());
+		} else if(cell.getCellTypeEnum() == CellType.NUMERIC)
 		{
-			newRow.createCell(index).setCellValue(row.getCell(index).getNumericCellValue());
+			cell = newRow.createCell(index);
+			cell.setCellValue(row.getCell(index).getNumericCellValue());
 		}
 	}
 }
