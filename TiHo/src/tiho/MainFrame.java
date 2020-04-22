@@ -86,7 +86,7 @@ public class MainFrame extends JFrame
 
 						if(response == 0)
 						{
-							exReader = new ExcelReader(fileAbsolutePath);
+							exReader = new ExcelReader(fileAbsolutePath, null);
 						} else if(response == 1)
 						{
 							MainFrame.this.dispose();

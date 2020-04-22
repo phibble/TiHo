@@ -26,16 +26,6 @@ public class ExcelReader
 	@SuppressWarnings("unused")
 	private ExcelWriter exWriter;
 
-	public ExcelReader(String path)
-	{
-		this.path = path;
-
-		getExcelSheet();
-		removeExcelSheets(workbook);
-
-		readExcelFile();
-	}
-
 	public ExcelReader(String path, String[] parameters)
 	{
 		this.path = path;
@@ -44,63 +34,6 @@ public class ExcelReader
 		removeExcelSheets(workbook);
 
 		readExcelFile(parameters);
-	}
-
-	private void readExcelFile()
-	{
-		Row row = null;
-		Cell cell = null;
-
-		int rowCounter = 0;
-		int cellCounter = 0;
-
-		Probe probe = new Probe();
-
-		for(int rowIterator = 0; rowIterator <= sheet.getLastRowNum(); rowIterator++)
-		{
-			row = sheet.getRow(rowIterator);
-
-			if(isRowEmpty(row))
-			{
-				continue;
-			}
-
-			for(int cellIterator = 0; cellIterator <= row.getLastCellNum(); cellIterator++)
-			{
-				cell = row.getCell(cellIterator);
-
-				if(cell == null)
-				{
-					continue;
-				}
-
-				if(cell.getCellTypeEnum() == CellType.STRING)
-				{
-					if(cell.getStringCellValue().trim().toLowerCase().contains("probe") && rowCounter != 0)
-					{
-						rowCounter = 0;
-						cellCounter = 0;
-					}
-
-					if(rowCounter == 0 && cellCounter == 0)
-					{
-						probe.setNumber(cell.getStringCellValue());
-					} else if(rowCounter == 0 && cellCounter == 1)
-					{
-						probe.setName(cell.getStringCellValue());
-					} else if(cellCounter == 0 && rowCounter != 0)
-					{
-						writeExcelSheet(row, probe);
-					}
-				}
-				cellCounter++;
-			}
-			cellCounter = 0;
-			rowCounter++;
-		}
-		writeSheet(workbook);
-		closeFile();
-		System.exit(0);
 	}
 
 	private void readExcelFile(String[] parameters)
@@ -170,11 +103,6 @@ public class ExcelReader
 		{
 			e.printStackTrace();
 		}
-	}
-
-	private void writeExcelSheet(Row row, Probe probe)
-	{
-		exWriter = new ExcelWriter(row, workbook, probe);
 	}
 
 	private void writeExcelSheet(Row row, Probe probe, String[] parameters)
