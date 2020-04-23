@@ -51,7 +51,7 @@ public class ExcelReader
 		boolean amino = false;
 		List<String> aminoProbes = new ArrayList<String>();
 
-		for(int rowIterator = 0; rowIterator <= sheet.getLastRowNum(); rowIterator++)
+		for(int rowIterator = 2; rowIterator <= sheet.getLastRowNum(); rowIterator++)
 		{
 			row = sheet.getRow(rowIterator);
 
@@ -91,11 +91,13 @@ public class ExcelReader
 					
 					if(cell.getStringCellValue().trim().toLowerCase().contains("aminosäure"))
 					{
+						System.out.println("amino");
 						if(!aminoProbes.contains(probe.getName()))
 						{
 							aminoProbes.add(probe.getName());
 						}
 						amino = true;
+						continue;
 					}
 				}
 				cellCounter++;
@@ -141,6 +143,7 @@ public class ExcelReader
 		} catch(Exception e)
 		{
 			JOptionPane.showMessageDialog(new JFrame(), "Die Datei konnte nicht geladen werden!");
+			FileSaver.deleteFile(path);
 			System.exit(0);
 		}
 	}
@@ -157,7 +160,7 @@ public class ExcelReader
 		{
 			JOptionPane.showMessageDialog(new JFrame(), "Die Datei wird bereits von einem anderen Prozess verwendet!");
 			System.exit(0);
-		} catch(Exception e2)
+		} catch(Exception e)
 		{
 			JOptionPane.showMessageDialog(new JFrame(), "Die Datei konnte nicht beschrieben werden!");
 			System.exit(0);

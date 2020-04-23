@@ -6,7 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -28,7 +27,7 @@ public class MainFrame extends JFrame
 	private boolean allParameters = true;
 
 	private ParameterFinder paramFinder;
-	private FileSaver fileSaver;
+	private static FileSaver fileSaver;
 
 	private static List<String> prevFiles;
 
@@ -44,8 +43,7 @@ public class MainFrame extends JFrame
 	{
 		setProgramLookAndFeel();
 
-		String[] prev = FileSaver.readPrevFile().split(",");
-		prevFiles = Arrays.asList(prev);
+		prevFiles = FileSaver.readPrevFile();
 
 		choosePanel = new ChoosePanel();
 		framePanel = new JPanel();
@@ -68,7 +66,11 @@ public class MainFrame extends JFrame
 				if(!(prevFiles.contains(fileAbsolutePath)))
 				{
 					fileSaver.writePrevFile();
+				} else
+				{
+					fileSaver.changeLastFile();
 				}
+
 				allParameters = choosePanel.isAllParameters();
 
 				if(fileAbsolutePath != "")
@@ -167,5 +169,10 @@ public class MainFrame extends JFrame
 	public static List<String> getPrevFiles()
 	{
 		return prevFiles;
+	}
+	
+	public static void changeLastFile()
+	{
+		fileSaver.changeLastFile();
 	}
 }

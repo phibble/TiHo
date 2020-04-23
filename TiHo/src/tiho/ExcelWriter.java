@@ -45,8 +45,9 @@ public class ExcelWriter
 		if(amino)
 		{
 			writeAminoAcids();
-		} else if(paramList == null || paramList.contains(valueID)
+		} else if((paramList == null || paramList.contains(valueID)
 				|| ((valueID.toLowerCase().contains("ts")) ? paramList.contains("TS") : false))
+				&& !valueID.toLowerCase().contains("aminosäure"))
 		{
 			int countNewRows = 0;
 
@@ -164,7 +165,7 @@ public class ExcelWriter
 	public void copyNumericStringValue(Row row, int index, Row newRow, CellStyle cellStyle)
 	{
 		Cell cell = row.getCell(index);
-		
+
 		if(cell.getCellTypeEnum() == CellType.STRING)
 		{
 			cell = newRow.createCell(index);

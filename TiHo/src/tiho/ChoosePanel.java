@@ -43,7 +43,7 @@ public class ChoosePanel extends JPanel
 		fileNameLabel = new JLabel("Datei: ");
 		searchButton = new JButton("...");
 		fileChooser = new JFileChooser();
-		
+
 		fileChooser.setFileFilter(new XLSXFilter());
 
 		allRadio = new JRadioButton("mit allen Parametern starten");
@@ -61,15 +61,16 @@ public class ChoosePanel extends JPanel
 
 		fileNameModel = new DefaultComboBoxModel<>();
 		fileNameModel.addElement("");
-		List<String> prevFiles = MainFrame.getPrevFiles();
 		
+		List<String> prevFiles = MainFrame.getPrevFiles();
+
 		for(int i = 0; i < prevFiles.size(); i++)
 		{
 			fileNameModel.addElement(prevFiles.get(i));
 		}
-		
+
 		fileName.setModel(fileNameModel);
-		fileName.setSelectedIndex(prevFiles.size() - 1);
+		fileName.setSelectedIndex(prevFiles.size());
 		fileName.setEditable(true);
 		fileName.setPreferredSize(new Dimension(270, 20));
 
@@ -82,9 +83,13 @@ public class ChoosePanel extends JPanel
 				if(fileChooser.showOpenDialog(ChoosePanel.this) == JFileChooser.APPROVE_OPTION)
 				{
 					fileAbsolutePath = fileChooser.getSelectedFile().getAbsolutePath();
-					fileNameModel.addElement(fileAbsolutePath);
-					fileNameModel.removeElementAt(0);
-					fileName.setSelectedIndex(fileNameModel.getSize() - 1);
+
+					if(!prevFiles.contains(fileAbsolutePath))
+					{
+						fileNameModel.addElement(fileAbsolutePath);
+					}
+					
+					fileName.setSelectedIndex(fileNameModel.getIndexOf(fileAbsolutePath));
 				}
 			}
 		});
@@ -149,7 +154,7 @@ public class ChoosePanel extends JPanel
 	{
 		return (String) fileName.getSelectedItem();
 	}
-	
+
 	public boolean isAllParameters()
 	{
 		return allParameters;

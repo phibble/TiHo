@@ -120,8 +120,10 @@ public class ParameterFinder
 
 		} catch(Exception e)
 		{
+			FileSaver.deleteFile(path);
 			JOptionPane.showMessageDialog(new JFrame(), "Die Datei konnte nicht geladen werden!");
 			e.printStackTrace();
+			System.exit(0);
 		}
 	}
 
