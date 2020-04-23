@@ -17,7 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ParameterFinder
 {
-	
+
 	private XSSFWorkbook workbook;
 	private XSSFSheet sheet;
 
@@ -40,7 +40,7 @@ public class ParameterFinder
 		{
 			Row row = rowIterator.next();
 			Cell cell = row.getCell(0);
-			
+
 			if(cell == null)
 			{
 				continue;
@@ -51,7 +51,14 @@ public class ParameterFinder
 				String cellValue = cell.getStringCellValue();
 				if(!(cellValue.toLowerCase().contains("probe")))
 				{
-					if(!(parameters.contains(cellValue.trim())))
+					if(cellValue.toLowerCase().contains("ts"))
+					{
+						if(!parameters.contains("TS"))
+						{
+							parameters.add("TS");
+						}
+						continue;
+					} else if(!(parameters.contains(cellValue.trim())))
 					{
 						parameters.add(cellValue.trim());
 					}
@@ -60,24 +67,24 @@ public class ParameterFinder
 		}
 
 		sortParameters();
-		
+
 		parameterArray = convertToArray(parameters, parameterArray);
 	}
-	
+
 	private void sortParameters()
 	{
 		List<String> temp = new ArrayList<String>();
-		for(String str: parameters)
+		for(String str : parameters)
 		{
 			temp.add(str.toLowerCase());
 		}
-		
+
 		Collections.sort(temp);
 		List<String> temp2 = new ArrayList<String>();
-		
+
 		for(int i = 0; i < temp.size(); i++)
 		{
-			for(String par: parameters)
+			for(String par : parameters)
 			{
 				if(temp.get(i).equals(par.toLowerCase()))
 				{
@@ -85,7 +92,7 @@ public class ParameterFinder
 				}
 			}
 		}
-		
+
 		parameters = temp2;
 	}
 
