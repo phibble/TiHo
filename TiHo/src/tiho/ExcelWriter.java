@@ -127,6 +127,7 @@ public class ExcelWriter
 
 		if(!aminoProbes.contains(probe.getName()))
 		{
+			System.out.println("yay");
 			aminoRow = aminoSheet.createRow(aminoRowCounter++);
 
 			cell = aminoRow.createCell(0);

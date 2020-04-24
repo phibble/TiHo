@@ -91,13 +91,11 @@ public class ExcelReader
 					
 					if(cell.getStringCellValue().trim().toLowerCase().contains("aminosäure"))
 					{
-						System.out.println("amino");
 						if(!aminoProbes.contains(probe.getName()))
 						{
 							aminoProbes.add(probe.getName());
 						}
 						amino = true;
-						continue;
 					}
 				}
 				cellCounter++;

@@ -87,24 +87,43 @@ public class FileSaver
 		}
 	}
 
-	public List<String> changeLastFile()
+	public void changeLastFile()
 	{
 		List<String> prevText = readPrevFile();
 		List<String> result = new ArrayList<String>();
-
+		
+		System.out.println(text);
+		
 		if(prevText.indexOf(text) != prevText.size() - 1)
 		{
 			for(String str : prevText)
 			{
+				System.out.println(str);
 				if(!str.equals(text))
 				{
 					result.add(str);
 				}
 			}
 			result.add(text);
+		} else
+		{
+			result = prevText;
 		}
-
-		return result;
+		
+		try
+		{
+			FileWriter writer = new FileWriter(path);
+			
+			for(String str: result)
+			{
+				writer.write(str + "\n");
+			}
+			
+			writer.close();
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public static void deleteFile(String text)

@@ -66,6 +66,7 @@ public class MainFrame extends JFrame
 				if(!(prevFiles.contains(fileAbsolutePath)))
 				{
 					fileSaver.writePrevFile();
+					fileSaver.changeLastFile();
 				} else
 				{
 					fileSaver.changeLastFile();

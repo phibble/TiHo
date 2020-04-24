@@ -61,7 +61,7 @@ public class ChoosePanel extends JPanel
 
 		fileNameModel = new DefaultComboBoxModel<>();
 		fileNameModel.addElement("");
-		
+
 		List<String> prevFiles = MainFrame.getPrevFiles();
 
 		for(int i = 0; i < prevFiles.size(); i++)
@@ -88,8 +88,13 @@ public class ChoosePanel extends JPanel
 					{
 						fileNameModel.addElement(fileAbsolutePath);
 					}
-					
-					fileName.setSelectedIndex(fileNameModel.getIndexOf(fileAbsolutePath));
+
+					FileSaver saver = new FileSaver(fileAbsolutePath);
+					if(fileNameModel.getIndexOf(fileAbsolutePath) != fileNameModel.getSize() - 1)
+					{
+						saver.changeLastFile();
+					}
+					fileNameModel.setSelectedItem(fileAbsolutePath);
 				}
 			}
 		});
