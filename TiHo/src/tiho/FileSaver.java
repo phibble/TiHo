@@ -92,13 +92,10 @@ public class FileSaver
 		List<String> prevText = readPrevFile();
 		List<String> result = new ArrayList<String>();
 		
-		System.out.println(text);
-		
 		if(prevText.indexOf(text) != prevText.size() - 1)
 		{
 			for(String str : prevText)
 			{
-				System.out.println(str);
 				if(!str.equals(text))
 				{
 					result.add(str);

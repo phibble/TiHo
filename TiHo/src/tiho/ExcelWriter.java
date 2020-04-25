@@ -17,16 +17,16 @@ public class ExcelWriter
 	private String valueID;
 	private Probe probe;
 	private boolean amino;
-	private List<String> aminoProbes;
+	private boolean aminoNames;
 
 	public ExcelWriter(Row row, XSSFWorkbook workbook, Probe probe, String[] parameters, boolean amino,
-			List<String> aminoProbes)
+			boolean aminoNames)
 	{
 		this.row = row;
 		this.workbook = workbook;
 		this.probe = probe;
 		this.amino = amino;
-		this.aminoProbes = aminoProbes;
+		this.aminoNames = aminoNames;
 
 		writeExcel(parameters);
 	}
@@ -125,8 +125,12 @@ public class ExcelWriter
 		Row aminoRow = null;
 		Cell cell = null;
 
-		if(!aminoProbes.contains(probe.getName()))
+		if(aminoNames)
 		{
+			if(aminoRowCounter != 0)
+			{
+				aminoRow = aminoSheet.createRow(aminoRowCounter++);
+			}
 			System.out.println("yay");
 			aminoRow = aminoSheet.createRow(aminoRowCounter++);
 

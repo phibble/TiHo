@@ -4,8 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -49,7 +47,7 @@ public class ExcelReader
 		Probe probe = new Probe();
 		
 		boolean amino = false;
-		List<String> aminoProbes = new ArrayList<String>();
+		boolean aminoName = false;
 
 		for(int rowIterator = 2; rowIterator <= sheet.getLastRowNum(); rowIterator++)
 		{
@@ -76,6 +74,11 @@ public class ExcelReader
 						rowCounter = 0;
 						cellCounter = 0;
 						amino = false;
+					} else if(cell.getStringCellValue().trim().toLowerCase().contains("aminosäure"))
+					{
+						aminoName = true;
+						amino = true;
+						continue;
 					}
 					
 					if(rowCounter == 0 && cellCounter == 0)
@@ -86,17 +89,10 @@ public class ExcelReader
 						probe.setName(cell.getStringCellValue());
 					} else if(cellCounter == 0 && rowCounter != 0)
 					{
-						writeExcelSheet(row, probe, parameters, amino, aminoProbes);
+						writeExcelSheet(row, probe, parameters, amino, aminoName);
 					}
 					
-					if(cell.getStringCellValue().trim().toLowerCase().contains("aminosäure"))
-					{
-						if(!aminoProbes.contains(probe.getName()))
-						{
-							aminoProbes.add(probe.getName());
-						}
-						amino = true;
-					}
+					aminoName = false;
 				}
 				cellCounter++;
 			}
@@ -120,9 +116,9 @@ public class ExcelReader
 		}
 	}
 
-	private void writeExcelSheet(Row row, Probe probe, String[] parameters, boolean amino, List<String> aminoProbes)
+	private void writeExcelSheet(Row row, Probe probe, String[] parameters, boolean amino, boolean aminoNames)
 	{
-		exWriter = new ExcelWriter(row, workbook, probe, parameters, amino, aminoProbes);
+		exWriter = new ExcelWriter(row, workbook, probe, parameters, amino, aminoNames);
 	}
 
 	private void getExcelSheet()
