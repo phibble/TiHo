@@ -42,7 +42,7 @@ public class ExcelWriter
 			paramList = convertArrayToList(parameters);
 		}
 
-		if(amino)
+		if(paramList == null && amino || paramList.contains("Aminosäuren") && amino)
 		{
 			writeAminoAcids();
 		} else if((paramList == null || paramList.contains(valueID)

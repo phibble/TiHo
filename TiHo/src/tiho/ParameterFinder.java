@@ -35,7 +35,7 @@ public class ParameterFinder
 		parameters = new ArrayList<String>();
 
 		Iterator<Row> rowIterator = sheet.rowIterator();
-		
+
 		boolean amino = false;
 
 		while(rowIterator.hasNext())
@@ -51,10 +51,13 @@ public class ParameterFinder
 			if(cell.getCellTypeEnum() == CellType.STRING)
 			{
 				String cellValue = cell.getStringCellValue();
-				if(cellValue.toLowerCase().contains("aminosäure") && !parameters.contains("Aminosäuren"))
+				if(cellValue.toLowerCase().contains("aminosäure"))
 				{
 					amino = true;
-					parameters.add("Aminosäuren");
+					if(!parameters.contains("Aminosäuren"))
+					{
+						parameters.add("Aminosäuren");
+					}
 				} else if(!(cellValue.toLowerCase().contains("probe")) && !amino)
 				{
 					if(cellValue.toLowerCase().contains("ts"))
