@@ -42,7 +42,7 @@ public class ExcelWriter
 			paramList = convertArrayToList(parameters);
 		}
 
-		if(paramList == null && amino || paramList.contains("Aminosäuren") && amino)
+		if(amino && (paramList == null || paramList.contains("Aminosäuren")))
 		{
 			writeAminoAcids();
 		} else if((paramList == null || paramList.contains(valueID)
@@ -131,7 +131,6 @@ public class ExcelWriter
 			{
 				aminoRow = aminoSheet.createRow(aminoRowCounter++);
 			}
-			System.out.println("yay");
 			aminoRow = aminoSheet.createRow(aminoRowCounter++);
 
 			cell = aminoRow.createCell(0);

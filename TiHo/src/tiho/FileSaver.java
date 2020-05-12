@@ -130,13 +130,10 @@ public class FileSaver
 			List<String> prevText = readPrevFile();
 			FileWriter writer = new FileWriter(path);
 			
-			System.out.println("*" + text + "*");
-			
 			for(int i = 0; i < prevText.size(); i++)
 			{
 				if(!prevText.get(i).trim().equals(text))
 				{
-					System.out.println("*" + prevText.get(i) + "*");
 					writer.write(prevText.get(i));
 					writer.write("\n");
 				}

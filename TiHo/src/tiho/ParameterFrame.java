@@ -1,6 +1,7 @@
 package tiho;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -41,7 +42,7 @@ public class ParameterFrame extends JFrame
 		confirmButton = new JButton("OK");
 		backButton = new JButton("Zurück");
 
-		confirmButton.setSize(backButton.getPreferredSize());
+		confirmButton.setSize(new Dimension(backButton.getPreferredSize().width + 50, backButton.getPreferredSize().height));
 
 		mainPanel = new JPanel();
 		Border innerBorder = BorderFactory.createEtchedBorder();
@@ -157,10 +158,10 @@ public class ParameterFrame extends JFrame
 
 	private void setFrame()
 	{
-		setSize(190, 300);
+		setSize(230, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
-		setResizable(false);
+		setResizable(true);
 		setLocationRelativeTo(null);
 	}
 }
